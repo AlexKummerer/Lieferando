@@ -96,7 +96,7 @@ window.onscroll = function() {
 };
 
 function loadHTML() {
-    document.getElementById("food-insert").innerHTML = '';
+    document.getElementById("food-insert").innerHTML = "";
     loadPizza();
     loadPasta();
     loadSalad();
@@ -155,7 +155,7 @@ function loadSalad() {
             element["price"].toFixed(2),
             element["amount"],
             i,
-            "salats"
+            "salads"
         );
     }
 }
@@ -189,10 +189,8 @@ function increaseAmount(category, i) {
 }
 
 function reduceAmount(category, i) {
-    if (food[category][i]["amount"] >= 1) {
-        food[category][i]["amount"]--;
-    } else {
-
+    food[category][i]["amount"]--;
+    if (food[category][i]["amount"] <= 1) {
         food[category][i]["amount"] = 1;
     }
 
