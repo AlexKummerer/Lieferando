@@ -1,0 +1,282 @@
+body {
+    margin: 0;
+    font-family: Takeaway Sans, Avant Garde, Century Gothic, Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    color: #666;
+    font-size: 13px;
+    background-color: #fff;
+    line-height: 1.5;
+    text-align: left;
+}
+
+.topbar-container {
+    position: relative;
+    background-color: #ff8000 !important;
+    z-index: 17;
+    padding-left: 50px;
+    color: white;
+}
+
+.navbar-brand {
+    font-size: 2rem;
+    filter: invert(25);
+}
+
+.front-image {
+    object-fit: cover;
+    height: 250px;
+    background-image: url(../img/pexels-edward-eyer-1049620.jpg);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+    width: calc(100% - 344px);
+}
+
+.number {
+    display: flex;
+    justify-content: center;
+    font-size: 2.25rem;
+    padding-right: 16px;
+    padding-left: 16px;
+    width: 30%;
+    position: absolute;
+    right: 270px;
+    align-items: center;
+}
+
+.number .btn {
+    margin: 5px !important;
+    margin-left: 10px !important;
+    font-size: 1rem;
+}
+
+.number :hover {
+    cursor: pointer;
+}
+
+.basket-container {
+    top: 72px;
+    position: fixed;
+    display: inline-block;
+    background-color: transparent;
+    z-index: 16;
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .3);
+    width: 344px;
+    bottom: 0;
+    right: 0;
+    transition: all 225ms ease-in-out;
+}
+
+.basket-button {
+    display: flex;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-align: center;
+    align-items: center;
+    color: #fff;
+    font-size: 16px;
+    font-stretch: normal;
+    font-style: normal;
+    height: 72px;
+    letter-spacing: normal;
+    line-height: 1.38;
+    min-width: 275px;
+    margin: 0!important;
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+    width: 100%;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.basker-button-secondary {
+    background-color: #fff;
+    border-bottom: 1px solid #f8f5f2;
+    cursor: default;
+    height: 56px;
+}
+
+.basket-button-label {
+    margin: 0;
+    text-align: center;
+    width: 100%;
+    color: #666;
+}
+
+.basket {
+    padding-right: 25px;
+    padding-left: 25px;
+    font-size: 15px;
+}
+
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+.basket-products {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.shoppingcart {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.shoppingcart p {
+    padding: 25px;
+}
+
+.sum-container {
+    border-top: solid lightgrey 1px;
+}
+
+.sum-row {
+    width: 200px;
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.sumcheck {
+    border-top: solid lightgrey 1px;
+    text-align: center;
+    margin-top: 55px;
+    font-size: small;
+}
+
+.btn {
+    border-top: solid lightgrey 1px;
+    margin-left: 55px;
+    margin-top: 20px;
+}
+
+.menu-meals {
+    position: relative;
+}
+
+.menu-meals.has-imprint {
+    margin-bottom: 15px;
+}
+
+.menucard-notification {
+    padding: 25px;
+}
+
+.menucard-main {
+    width: calc(100% - 344px);
+    min-height: calc(100% - 200px - 72px);
+}
+
+.menucard-listing .menu-menucard {
+    padding-top: 0;
+    width: 100%;
+}
+
+.menucard-listing .menucard-notification {
+    margin-bottom: 7px;
+}
+
+.menucard-listing .menucard-container {
+    padding: 0 24px;
+    max-width: 1130px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.menucard-listing .menucard-notification .restaurant-name h1 {
+    max-width: calc(50% - 65px - 24px - 24px);
+    margin: 17px 0 0;
+}
+
+.menucard-listing .menucard-notification .restaurant-info {
+    margin-bottom: 24px;
+    max-width: 738px;
+}
+
+.menucard-mealsgroup {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.category-image {
+    object-fit: cover;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 1px 1px 0 0;
+    height: 184px;
+}
+
+.item-name {
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.meal-container {
+    border: 1px solid rgb(213, 232, 238);
+    border-radius: 3px;
+    margin: 8px 0;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    max-width: calc(100% - 40px);
+    margin-right: 25px;
+    margin-left: 25px;
+    padding: 15px 15px;
+}
+
+.meal-container-discription {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.meal-name {
+    font-family: Takeaway Sans, Avant Garde, Century Gothic, Helvetica, Arial, sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.22;
+    color: #0a3847;
+    margin: 0 0 20px;
+}
+
+.meal-price {
+    font-family: Takeaway Sans, Avant Garde, Century Gothic, Helvetica, Arial, sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.22;
+    letter-spacing: -.5px;
+    color: #ff8000;
+    margin: auto 0 0;
+}
+
+.add-item {
+    font-family: fontello;
+    font-weight: 500;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #ebebeb;
+    border-left: 1px solid #ebebeb;
+    border-radius: 0 2px 0 0;
+    color: #1574f5;
+    font-size: 14px;
+    text-align: center;
+}
