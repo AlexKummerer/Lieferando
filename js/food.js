@@ -96,6 +96,7 @@ window.onscroll = function() {
 };
 
 function loadHTML() {
+    document.getElementById("food-insert").innerHTML = '';
     loadPizza();
     loadPasta();
     loadSalad();
@@ -113,7 +114,7 @@ function loadPizza() {
         const element = pizza[i];
         div.innerHTML += generatePriceHTML(
             element["type"],
-            element["price"],
+            element["price"].toFixed(2),
             element["amount"],
             i,
             "pizzas"
@@ -132,7 +133,7 @@ function loadPasta() {
         const element = pasta[i];
         div.innerHTML += generatePriceHTML(
             element["type"],
-            element["price"],
+            element["price"].toFixed(2),
             element["amount"],
             i,
             "pastas"
@@ -151,7 +152,7 @@ function loadSalad() {
         const element = salad[i];
         div.innerHTML += generatePriceHTML(
             element["type"],
-            element["price"],
+            element["price"].toFixed(2),
             element["amount"],
             i,
             "salats"
@@ -172,13 +173,29 @@ function generatePriceHTML(type, price, amount, i, category) {
     return `<div class="meal-container meal-container-discription">
                 <span class="meal-name">${type}</span>
                 <div class="meal-price">${price} €</div>
-                <div class="number"><a onclick="reduceAmount()">-</a> ${amount} <a onclick="increaseAmount('${category}',${i})">+</a>
+                <div class="number"><a onclick="reduceAmount('${category}',${i})">-</a> ${amount} <a onclick="increaseAmount('${category}',${i})">+</a>
                 <button class ="btn btn-primary btn-lg" onclick="addToBasket('${category}', ${i})">Hinzufügen</button>  </div>
             </div>`;
 }
 
 function increaseAmount(category, i) {
-    food[category][i]['amount']++;
+    if (food[category][i]["amount"] <= 1) {
+        food[category][i]["amount"]++;
+    } else {
+        food[category][i]["amount"]++;
+    }
+
+    loadHTML();
+}
+
+function reduceAmount(category, i) {
+    if (food[category][i]["amount"] >= 1) {
+        food[category][i]["amount"]--;
+    } else {
+
+        food[category][i]["amount"] = 1;
+    }
+
     loadHTML();
 }
 
