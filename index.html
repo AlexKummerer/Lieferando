@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <title>Liferando</title>
+    <script src="js/food.js"></script>
+    <script src="js/basket.js"></script>
+</head>
+
+<body onload="loadHTML()">
+    <nav class="navbar navbar-light bg-light topbar-container">
+        <div class="navbar-brand" href="#">
+            <img src="https://img.icons8.com/pastel-glyph/64/000000/lunch--v2.png" width="50" height="50" class="d-inline-block align-top" alt="" /> Liferando
+        </div>
+
+        <span class="navbar-brand"> Lieferadresse </span>
+    </nav>
+
+    <div class="front-image"></div>
+
+    <div class="basket-container" id="ibasket">
+        <div class="basket-button basker-button-secondary">
+            <p class="basket-button-label">
+                <span class="basker-button-labal-title"> Warenkorb </span>
+            </p>
+        </div>
+
+        <div class="basket basket-button-scroller">
+            <div class="shoppingcart" id="shoppingcart">
+                <!--- <img src="https://img.icons8.com/carbon-copy/100/000000/shopping-cart.png" />
+                <p>Wähle leckere Gerichte aus der Karte und bestelle Dein Menü.</p> -->
+            </div>
+            <div class="sum-container">
+                <div class="sum-row" id="sumwithoutshipping"></div>
+                <div class="sum-row">
+                    <p>Lieferkosten</p>
+                    <p>1.50 €</p>
+                </div>
+                <div class="sum-row" id="sumwithshipping"></div>
+            </div>
+
+            <div class="sumcheck" id="sumcheck"></div>
+
+            <button class="btn btn-primary btn-lg" onclick="startorder()" id="orderbutton">
+          Jetzt Bestellen
+        </button>
+        </div>
+    </div>
+
+    <main id="main" class="menucard-main content-listening menucard-listening">
+        <div class="menu-menucard">
+            <div class="menucard-notification">
+                <div class="menucard-container"></div>
+
+                <div class="restaurant-name">
+                    <h1>Pizza Reggina</h1>
+                </div>
+
+                <div class="restaurant-info"></div>
+                Bei diesem Restaurant kannst Du Stempel sammeln.
+            </div>
+
+            <div id="food-insert"></div>
+        </div>
+    </main>
+</body>
+
+</html>
