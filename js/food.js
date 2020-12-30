@@ -238,5 +238,15 @@ function checksum() {
 // add food to bakset
 function addToBasket(category, i) {
     shoppingBasket.push(food[category][i]);
+    alert("Wir haben nicht geöffnet");
+    setAmountToOne(category, i);
     document.getElementById("shoppingcart").innerHTML += ``;
+}
+
+function setAmountToOne(category, i) {
+    if (shoppingBasket.push(food[category][i])) {
+        food[category][i]["amount"];
+    } else {
+        food[category][i]["amount"] = 1;
+    }
 }
