@@ -237,16 +237,12 @@ function checksum() {
 
 // add food to bakset
 function addToBasket(category, i) {
-    shoppingBasket.push(food[category][i]);
-    alert("Wir haben nicht geöffnet");
-    setAmountToOne(category, i);
-    document.getElementById("shoppingcart").innerHTML += ``;
-}
+    const clone = JSON.parse(JSON.stringify(food[category][i]));
 
-function setAmountToOne(category, i) {
-    if (shoppingBasket.push(food[category][i])) {
-        food[category][i]["amount"];
-    } else {
-        food[category][i]["amount"] = 1;
-    }
+    shoppingBasket.push(clone);
+    alert("Wir haben nicht geöffnet");
+    document.getElementById("shoppingcart").innerHTML += ``;
+    food[category][i]["amount"] = 1;
+    loadHTML();
+
 }
