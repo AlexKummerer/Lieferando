@@ -10,8 +10,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/style.css" />
-
-    <title>Liferando</title>
+    <link rel="icon" href="img/tableware_48px.png">
+    <title>Alex bringt's....,</title>
     <script src="js/food.js"></script>
     <script src="js/basket.js"></script>
 </head>
@@ -19,10 +19,10 @@
 <body onload="loadHTML()">
     <nav class="navbar navbar-light bg-light topbar-container">
         <div class="navbar-brand" href="#">
-            <img src="https://img.icons8.com/pastel-glyph/64/000000/lunch--v2.png" width="50" height="50" class="d-inline-block align-top" alt="" /> Liferando
+            <img class="nav-img" src="img/tableware_48px.png" width="50" height="50" class="d-inline-block align-top" alt="" /> Alex bringt's.....,
         </div>
 
-        <span class="navbar-brand"> Lieferadresse </span>
+        <span class="navbar-brand"> Humboldweg 461, 91452 Floppenfarm </span>
     </nav>
 
     <div class="front-image"></div>
@@ -35,17 +35,28 @@
         </div>
 
         <div class="basket basket-button-scroller">
-            <div class="shoppingcart" id="shoppingcart">
-                <!--- <img src="https://img.icons8.com/carbon-copy/100/000000/shopping-cart.png" />
-                <p>Wähle leckere Gerichte aus der Karte und bestelle Dein Menü.</p> -->
+            <div class="shoppingcart" id="shoppingcard">
+                <div class="shoppingcart" id="shoppingcart">
+                    <img src="https://img.icons8.com/carbon-copy/100/000000/shopping-cart.png" />
+                    <p> Wähle leckere Gerichte aus und bestelle Dein Menü. </p>
+                </div>
             </div>
             <div class="sum-container">
-                <div class="sum-row" id="sumwithoutshipping"></div>
+                <div class="sum-row">
+                    <p>Zwischensumme</p>
+                    <p id="sumwithoutshipping">0.00 €</p>
+
+                </div>
                 <div class="sum-row">
                     <p>Lieferkosten</p>
-                    <p>1.50 €</p>
+                    <p>4.55 €</p>
                 </div>
-                <div class="sum-row" id="sumwithshipping"></div>
+                <div class="sum-row">
+                    <p>Gesamtsumme</p>
+                    <p id="sumwithshipping">0.00 €</p>
+
+
+                </div>
             </div>
 
             <div class="sumcheck" id="sumcheck"></div>
@@ -73,5 +84,7 @@
         </div>
     </main>
 </body>
+
+
 
 </html>

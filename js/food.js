@@ -80,9 +80,8 @@ let food = {
 };
 
 let shoppingBasket = [];
-
-let basketAmountWithoutShipping = 0.0;
-let basketAmountWithShipping = 0.0;
+let basketAmountWithoutShipping = 0;
+let total = 0;
 let orderStatus = 0;
 
 window.onscroll = function() {
@@ -100,7 +99,7 @@ function loadHTML() {
     loadPizza();
     loadPasta();
     loadSalad();
-    basket();
+    checksum();
 }
 
 function loadPizza() {
@@ -197,37 +196,119 @@ function reduceAmount(category, i) {
     loadHTML();
 }
 
-function basket() {
-    document.getElementById(
-        "sumwithoutshipping"
-    ).innerHTML = `<p>Zwischensumme</p> <p> ${basketAmountWithoutShipping} € </p>`;
-    document.getElementById(
-        "sumwithshipping"
-    ).innerHTML = `<p>Gesamtsumme</p> <p> ${basketAmountWithShipping} €</p>`;
-    document.getElementById(
-        "shoppingcart"
-    ).innerHTML = `<div class="shoppingcart" id="shoppingcart">
-    <img src="https://img.icons8.com/carbon-copy/100/000000/shopping-cart.png" />
-    <p> Wähle leckere Gerichte aus und bestelle Dein Menü. </p></div>`;
-    checksum();
+// add food to bakset
+function addToBasket(category, i) {
+    const clone = JSON.parse(JSON.stringify(food[category][i]));
+    food[category][i]["amount"] = 1;
+    loadHTML();
+    showBasket(clone);
 }
 
-function startorder() {
-    checksum();
-    if (orderStatus == 1) {
-        alert("Dies ist ein Test. Warenkorb wird nun geleert");
-        checksum();
+function showBasket(clone) {
+    let item = {
+        name: clone.type,
+        price: clone.price,
+        amount: clone.amount,
+    };
+
+
+    let itemInBasket = shoppingBasket.find(e => e.name == item.name);
+
+    console.log('item', item);
+    console.log('itemInBasket', itemInBasket);
+
+    if (itemInBasket) {
+        itemInBasket.amount += item.amount; // =   itemInBasket.amount = itemInBasket.amount + item.amount;
     } else {
-        alert("Mindestbestellwert noch nicht erreicht");
+        shoppingBasket.push(item);
     }
+    updatedBasket();
+}
+
+function updatedBasket() {
+    document.getElementById("shoppingcard").innerHTML = "";
+    for (let i = 0; i < shoppingBasket.length; i++) {
+        const card = shoppingBasket[i];
+        let finalprice = card["price"] * card["amount"];
+        document.getElementById("shoppingcard").innerHTML += generateCard(
+            card["amount"],
+            card["name"],
+            finalprice,
+            i
+        )
+    }
+
+    showBasketPlaceholder();
+    totalPriceCalc();
+    loadHTML();
+}
+
+
+
+
+function generateCard(amount, type, finalprice, i) {
+    return ` 
+    <div class="card-row">
+        <div class="card-column">
+            <div id="amounts${i}"> ${amount} x </div>
+            <div>${type}</div> 
+        </div>
+        <div class="card-column">
+                <div>  <img onclick="increase(${i})" class="icon3" src="img/plus_50px.png"></div>
+                <div>  <img onclick="decrease(${i})" class="icon3" src="img/minus_50px.png"> </div>
+            </div>
+
+            <div class="card-column">
+                <div class="item-price">${finalprice.toFixed(2)} € </div>
+                <img onclick="deleteItem(${i})" class="icon3" src="img/trash_64px.png">
+            </div>
+        </div>
+    </div>`;
+}
+
+function deleteItem(i) {
+    shoppingBasket.splice(i, 1);
+    updatedBasket();
+    if (shoppingCart.length == 0) {
+        document.getElementById("shoppingcart").classList.remove("d-none");
+    }
+}
+
+function increase(i) {
+    shoppingBasket[i].amount++;
+    updatedBasket();
+}
+
+function decrease(i) {
+    shoppingBasket[i].amount--;
+    if (shoppingBasket[i].amount == 0) {
+        deleteItem(i);
+    }
+    updatedBasket();
+}
+
+function totalPriceCalc() {
+    basketAmountWithoutShipping = 0;
+    let total = 0;
+    for (let i = 0; i < shoppingBasket.length; i++) {
+        const card = shoppingBasket[i];
+        basketAmountWithoutShipping += card["price"] * card["amount"];
+        total = basketAmountWithoutShipping + 4.55;
+    }
+
+    document.getElementById(
+        "sumwithoutshipping"
+    ).innerHTML = `${basketAmountWithoutShipping.toFixed(2)} € `;
+    document.getElementById("sumwithshipping").innerHTML = `${total.toFixed(
+    2
+  )} €`;
 }
 
 function checksum() {
     let sum = basketAmountWithoutShipping;
-    if (sum >= 20) {
+    if (sum > 20) {
         orderStatus = 1;
-    }
-    if (sum < 20) {
+    } else {
         orderStatus = 0;
         document.getElementById(
             "sumcheck"
@@ -235,14 +316,26 @@ function checksum() {
     }
 }
 
-// add food to bakset
-function addToBasket(category, i) {
-    const clone = JSON.parse(JSON.stringify(food[category][i]));
+function startorder() {
+    if (orderStatus == 1) {
+        alert("....doch nicht. :-)");
+        shoppingBasket = [];
+        document.getElementById("shoppingcard").innerHTML = "";
+        totalPriceCalc();
+        checksum();
+        showBasketPlaceholder();
+    } else {
+        alert("Mindestbestellwert noch nicht erreicht");
+    }
+}
 
-    shoppingBasket.push(clone);
-    alert("Wir haben nicht geöffnet");
-    document.getElementById("shoppingcart").innerHTML += ``;
-    food[category][i]["amount"] = 1;
-    loadHTML();
+
+function showBasketPlaceholder() {
+
+    if (shoppingBasket.length == 0) {
+        document.getElementById("shoppingcard").innerHTML =
+            `  <img src="https://img.icons8.com/carbon-copy/100/000000/shopping-cart.png">
+        <p> Wähle leckere Gerichte aus und bestelle Dein Menü. </p>`;
+    }
 
 }

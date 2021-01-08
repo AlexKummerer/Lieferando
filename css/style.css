@@ -9,6 +9,10 @@ body {
     text-align: left;
 }
 
+.d-none {
+    display: none;
+}
+
 .topbar-container {
     position: relative;
     background-color: #ff8000 !important;
@@ -30,7 +34,11 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     z-index: -1;
-    width: calc(100% - 344px);
+    width: calc(100% - 400px);
+}
+
+.nav-img {
+    filter: invert(1);
 }
 
 .number {
@@ -62,7 +70,7 @@ body {
     background-color: transparent;
     z-index: 16;
     box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .3);
-    width: 344px;
+    width: 400px;
     bottom: 0;
     right: 0;
     transition: all 225ms ease-in-out;
@@ -111,6 +119,32 @@ body {
     font-size: 15px;
 }
 
+.card-row {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.card-column {
+    display: flex;
+}
+
+.item-price {
+    width: 60px;
+    display: flex;
+    justify-content: center;
+}
+
+.icon3 {
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+}
+
 p {
     display: block;
     margin-block-start: 1em;
@@ -130,6 +164,9 @@ p {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 8px;
 }
 
 .shoppingcart p {
@@ -141,8 +178,12 @@ p {
 }
 
 .sum-row {
-    width: 200px;
     height: 30px;
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 45px;
+    padding-bottom: 10px;
+    padding-top: 8px;
     display: flex;
     justify-content: space-between;
 }
@@ -156,7 +197,7 @@ p {
 
 .btn {
     border-top: solid lightgrey 1px;
-    margin-left: 55px;
+    width: 100%;
     margin-top: 20px;
 }
 
@@ -173,7 +214,7 @@ p {
 }
 
 .menucard-main {
-    width: calc(100% - 344px);
+    width: calc(100% - 400px);
     min-height: calc(100% - 200px - 72px);
 }
 
