@@ -10,10 +10,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="icon" href="img/tableware_48px.png">
+    <link rel="icon" href="img/tableware_48px.png" />
     <title>Alex bringt's....,</title>
     <script src="js/food.js"></script>
     <script src="js/basket.js"></script>
+    <script src="js/html.js"></script>
 </head>
 
 <body onload="loadHTML()">
@@ -21,31 +22,26 @@
         <div class="navbar-brand" href="#">
             <img class="nav-img" src="img/tableware_48px.png" width="50" height="50" class="d-inline-block align-top" alt="" /> Alex bringt's.....,
         </div>
-
-        <span class="navbar-brand"> Humboldweg 461, 91452 Floppenfarm </span>
     </nav>
 
     <div class="front-image"></div>
 
-    <div class="basket-container" id="ibasket">
+    <div class="basket-container hide-mobile " id="ibasket">
         <div class="basket-button basker-button-secondary">
             <p class="basket-button-label">
-                <span class="basker-button-labal-title"> Warenkorb </span>
+                <span class="basket-button-label-title"> Warenkorb </span>
             </p>
+            <img class="basket-button-close show-mobile" src="img/multiply_16px.png" onclick="closeBasket()">
         </div>
 
         <div class="basket basket-button-scroller">
-            <div class="shoppingcart" id="shoppingcard">
-                <div class="shoppingcart" id="shoppingcart">
-                    <img src="https://img.icons8.com/carbon-copy/100/000000/shopping-cart.png" />
-                    <p> Wähle leckere Gerichte aus und bestelle Dein Menü. </p>
-                </div>
+            <div class="shoppingcard" id="shoppingcard">
+                <div class="shoppingcard" id="shoppingcard_Placeholder"></div>
             </div>
             <div class="sum-container">
                 <div class="sum-row">
                     <p>Zwischensumme</p>
                     <p id="sumwithoutshipping">0.00 €</p>
-
                 </div>
                 <div class="sum-row">
                     <p>Lieferkosten</p>
@@ -54,14 +50,12 @@
                 <div class="sum-row">
                     <p>Gesamtsumme</p>
                     <p id="sumwithshipping">0.00 €</p>
-
-
                 </div>
             </div>
 
             <div class="sumcheck" id="sumcheck"></div>
 
-            <button class="btn btn-primary btn-lg" onclick="startorder()" id="orderbutton">
+            <button class="btn-order btn-primary btn-lg" onclick="startorder()" id="orderbutton">
           Jetzt Bestellen
         </button>
         </div>
@@ -83,8 +77,11 @@
             <div id="food-insert"></div>
         </div>
     </main>
+
+    <nav class="basket-bottom-nav show-mobile d-none" id="basket-btn">
+
+
+    </nav>
 </body>
-
-
 
 </html>
