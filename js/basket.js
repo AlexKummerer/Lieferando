@@ -1,7 +1,21 @@
 let shoppingBasket = [];
+setURL(
+    "http://alexander-kummerer.developerakademie.com/lieferando/json_to_server"
+);
 let basketAmountWithoutShipping = 0;
 let total = 0;
 let orderStatus = 0;
+let itemsAmount = 0;
+let minimumOrderCosts = 40;
+let minimumdifference;
+let orderedMeals = [];
+
+function init() {
+    downloadFromServer();
+    shoppingBasket = JSON.parse(localStorage.getItem("shoppingBasket")) || [];
+    updatedBasket();
+    loadHTML();
+}
 
 function showBasket(clone) {
     let item = {
@@ -17,13 +31,15 @@ function showBasket(clone) {
 
     if (itemInBasket) {
         itemInBasket.amount += item.amount; // =   itemInBasket.amount = itemInBasket.amount + item.amount;
+        updatedBasket();
     } else {
         shoppingBasket.push(item);
+        updatedBasket();
     }
-    updatedBasket();
 }
 
 function updatedBasket() {
+    document.getElementById("basket-btn").innerHTML = "";
     document.getElementById("shoppingcard").innerHTML = "";
     for (let i = 0; i < shoppingBasket.length; i++) {
         const card = shoppingBasket[i];
@@ -35,9 +51,12 @@ function updatedBasket() {
             i
         );
     }
+    localStorage.setItem("shoppingBasket", JSON.stringify(shoppingBasket));
     totalPriceCalc();
+    countArrayAmount();
     loadHTML();
     showBasketBtn();
+    minimumOrderDif();
 }
 
 function generateCard(amount, type, finalprice, i) {
@@ -63,11 +82,7 @@ function generateCard(amount, type, finalprice, i) {
 function deleteItem(i) {
     shoppingBasket.splice(i, 1);
     updatedBasket();
-    if (shoppingCart.length == 0) {
-        document
-            .getElementById("shoppingcard_Placeholder")
-            .classList.remove("d-none");
-    }
+    loadHTML();
 }
 
 function increase(i) {
@@ -101,28 +116,42 @@ function totalPriceCalc() {
 }
 
 function checksum() {
-    if (basketAmountWithoutShipping > 20) {
+    if (basketAmountWithoutShipping > 40) {
         orderStatus = 0;
-        document.getElementById("sumcheck").innerHTML = "";
+        document.getElementById(
+            "sumcheck"
+        ).innerHTML = `<br> <div> Du hast den Mindestbestelllwert erreicht. Du kannst nun bestellen.</div> `;
     } else {
         orderStatus = 1;
         document.getElementById(
             "sumcheck"
-        ).innerHTML = ` <br /> Du hast den Mindestbestellwert von 20€ noch nicht erreicht. `;
+        ).innerHTML = `<br> <div> Leider kannst du noch nicht bestellen. Wir liefern erst ab einen Mindestbestellwert von <span>${minimumOrderCosts.toFixed(
+      2
+    )} € </span> (exkl. Lieferkosten). `;
     }
 }
 
 function startorder() {
     if (orderStatus == 0) {
+        const clone = JSON.parse(JSON.stringify(shoppingBasket));
+        orderedMeal(clone);
         alert("....doch nicht. :-)");
         shoppingBasket = [];
+        localStorage.setItem("shoppingBasket", JSON.stringify(shoppingBasket));
         document.getElementById("shoppingcard").innerHTML = "";
-        totalPriceCalc();
-        checksum();
-        showBasketPlaceholder();
+        document.getElementById("basket-btn").innerHTML = "";
+        resolve();
     } else {
-        alert("Mindestbestellwert von 20,00 €noch nicht erreicht");
+        alert("Mindestbestellwert von 40,00 € noch nicht erreicht");
     }
+}
+
+function resolve() {
+    totalPriceCalc();
+    checksum();
+    showBasketPlaceholder();
+    closeBasket();
+    minimumOrderDif();
 }
 
 function showBasketPlaceholder() {
@@ -134,6 +163,25 @@ function showBasketPlaceholder() {
     }
 }
 
+function minimumOrderDif() {
+    document.getElementById("minimumcost").innerHTML = "";
+    minimumdifference = minimumOrderCosts - basketAmountWithoutShipping;
+    if (shoppingBasket.length >= 1) {
+        document
+            .getElementById("minimumcost")
+            .classList.add("sum-row", "minimumcost");
+        document.getElementById("minimumcost").innerHTML = `
+        <p> Benötigter Betrag, um den Mindestbestellwert zu erreichen </p>
+        <span>${minimumdifference.toFixed(2)} € </span>
+        `;
+    }
+    if (minimumdifference <= 0) {
+        document
+            .getElementById("minimumcost")
+            .classList.remove("sum-row", "minimumcost");
+        document.getElementById("minimumcost").innerHTML = "";
+    }
+}
 
 function showBasketBtn() {
     if (shoppingBasket.length >= 1) {
@@ -148,16 +196,22 @@ function generateBtn() {
         <button class="basket-bottom-button btn-primary btn-lg" onclick="showBasketMobile()">
           <div class="basket-button-icon-container">
             <img class="basket-button-icon"src="img/shopping_cart_26px.png"/>
-            <span class="basket-button-counter">1</span>
+            <span class="basket-button-counter">${itemsAmount}</span>
           </div>
           <p class="basket-button-label">
             <span class=""> Warenkorb</span>
-            <span class="basket-button-label-price"> (${basketAmountWithoutShipping.toFixed(2)} €) </span>
+            <span class="basket-button-label-price"> (${basketAmountWithoutShipping.toFixed(
+              2
+            )} €) </span>
           </p>
         </button>
     </div>
 
 `;
+}
+
+function countArrayAmount() {
+    itemsAmount = shoppingBasket.length;
 }
 
 function showBasketMobile() {
@@ -166,4 +220,14 @@ function showBasketMobile() {
 
 function closeBasket() {
     document.getElementById("ibasket").classList.add("hide-mobile");
+}
+
+function orderedMeal(clone) {
+    meal = {
+        id: new Date().getTime(),
+        meals: clone,
+    };
+
+    orderedMeals.push(meal);
+    backend.setItem("orderedMeals", JSON.stringify(orderedMeals));
 }

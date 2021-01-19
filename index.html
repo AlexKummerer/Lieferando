@@ -12,26 +12,51 @@
     <link rel="stylesheet" href="css/style.css" />
     <link rel="icon" href="img/tableware_48px.png" />
     <title>Alex bringt's....,</title>
+    <script src="js/mini_backend.js"></script>
+    <script src="js/html.js"></script>
     <script src="js/food.js"></script>
     <script src="js/basket.js"></script>
-    <script src="js/html.js"></script>
+
+
 </head>
 
-<body onload="loadHTML()">
-    <nav class="navbar navbar-light bg-light topbar-container">
-        <div class="navbar-brand" href="#">
-            <img class="nav-img" src="img/tableware_48px.png" width="50" height="50" class="d-inline-block align-top" alt="" /> Alex bringt's.....,
+<body onload="loadHTML(), init()">
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light topbar-container">
+        <img src="img/tableware_48px.png" alt="">
+        <p class="navbar-brand" href="#">Alex bringt's..</p>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Pizza <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Pasta</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link " href="#">Salat</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
         </div>
     </nav>
 
     <div class="front-image"></div>
 
-    <div class="basket-container hide-mobile " id="ibasket">
+    <div class="basket-container hide-mobile" id="ibasket">
         <div class="basket-button basker-button-secondary">
             <p class="basket-button-label">
                 <span class="basket-button-label-title"> Warenkorb </span>
             </p>
-            <img class="basket-button-close show-mobile" src="img/multiply_16px.png" onclick="closeBasket()">
+            <img class="basket-button-close show-mobile" src="img/multiply_16px.png" onclick="closeBasket()" />
         </div>
 
         <div class="basket basket-button-scroller">
@@ -47,10 +72,16 @@
                     <p>Lieferkosten</p>
                     <p>4.55 €</p>
                 </div>
-                <div class="sum-row">
-                    <p>Gesamtsumme</p>
-                    <p id="sumwithshipping">0.00 €</p>
+                <div class="sum-row totale">
+                    <p><b> Gesamtsumme </b></p>
+                    <p id="sumwithshipping"><b>0.00 € </b></p>
                 </div>
+                <div class="" id="minimumcost">
+
+
+                </div>
+
+
             </div>
 
             <div class="sumcheck" id="sumcheck"></div>
@@ -78,10 +109,7 @@
         </div>
     </main>
 
-    <nav class="basket-bottom-nav show-mobile d-none" id="basket-btn">
-
-
-    </nav>
+    <nav class="basket-bottom-nav show-mobile d-none" id="basket-btn"></nav>
 </body>
 
 </html>

@@ -1,13 +1,3 @@
-window.onscroll = function() {
-    let ibasket = document.getElementById("ibasket");
-
-    if (window.scrollY > 72) {
-        ibasket.style.top = "0";
-    } else {
-        ibasket.style.top = "72px";
-    }
-};
-
 function loadHTML() {
     document.getElementById("food-insert").innerHTML = "";
     loadPizza();
@@ -85,10 +75,16 @@ function generateCardTitle(img, name) {
 
 function generatePriceHTML(type, price, amount, i, category) {
     return `<div class="meal-container meal-container-discription">
-                <span class="meal-name">${type}</span>
-                <div class="meal-price">${price} €</div>
-                <div class="number">  <div> <a onclick="reduceAmount('${category}',${i})">-</a> ${amount} <a onclick="increaseAmount('${category}',${i})">+</a> </div>
-                <button class ="btn btn-primary" onclick="addToBasket('${category}', ${i})">Hinzufügen</button>  </div>
+                <div class="meal-container-name" >
+                    <span class="meal-name">${type}</span>
+                    <div class="meal-price">${price} €</div>
+                </div>    
+                <div class="number">  
+                    <div class="number-count"> 
+                        <a onclick="reduceAmount('${category}',${i})">-</a> ${amount} <a onclick="increaseAmount('${category}',${i})">+</a>
+                    </div>
+                    <button class ="btn btn-primary" onclick="addToBasket('${category}', ${i})">Hinzufügen</button> 
+                </div>
             </div>`;
 }
 
