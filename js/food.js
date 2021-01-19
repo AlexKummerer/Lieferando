@@ -1,5 +1,8 @@
-// Array for menu
-
+/**
+ * 
+ * Array of food
+ * 
+ */
 let food = {
     pizzas: [{
             type: "Pizza Salami",

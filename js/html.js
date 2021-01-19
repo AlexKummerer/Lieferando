@@ -1,10 +1,13 @@
+/**
+ * This function generates HTMl Content
+ */
 function loadHTML() {
     document.getElementById("food-insert").innerHTML = "";
     loadPizza();
     loadPasta();
     loadSalad();
     checksum();
-    showBasketPlaceholder()
+    showBasketPlaceholder();
 }
 
 function loadPizza() {
@@ -64,6 +67,14 @@ function loadSalad() {
     }
 }
 
+/**
+ *
+ * This function generates the beginning of each food category
+ *
+ *
+ * @param {object} img - image of the food category
+ * @param {object} name - name of the food category
+ */
 function generateCardTitle(img, name) {
     return `<div class="menucard-mealsgroup">
                 <img class="category-image" src="${img}">                
@@ -73,6 +84,17 @@ function generateCardTitle(img, name) {
             </div>`;
 }
 
+/**
+ *
+ * This function generates the a list of meal to choose of each food category
+ *
+ *
+ * @param {string} type - name of each meal
+ * @param {number} price  - price of each mail
+ * @param {number} amount - amount of each meal
+ * @param {number} i  - number of each meal
+ * @param {object} category - category of each food category
+ */
 function generatePriceHTML(type, price, amount, i, category) {
     return `<div class="meal-container meal-container-discription">
                 <div class="meal-container-name" >
@@ -88,6 +110,14 @@ function generatePriceHTML(type, price, amount, i, category) {
             </div>`;
 }
 
+/**
+ *
+ * This function will increase the amount
+ *
+ *
+ * @param {object} category - category of the meal
+ * @param {number} i - number of the each meal
+ */
 function increaseAmount(category, i) {
     if (food[category][i]["amount"] <= 1) {
         food[category][i]["amount"]++;
@@ -98,6 +128,11 @@ function increaseAmount(category, i) {
     loadHTML();
 }
 
+/**
+ * This function will reduce the amount
+ * @param {object} category - category of the meal
+ * @param {number} i - number of the each meal
+ */
 function reduceAmount(category, i) {
     food[category][i]["amount"]--;
     if (food[category][i]["amount"] <= 1) {
@@ -107,6 +142,12 @@ function reduceAmount(category, i) {
     loadHTML();
 }
 
+/**
+ * This function will add the meal to the basket
+ *
+ * @param {object} category - category of the meal
+ *  @param {number} i - number of the each meal
+ */
 function addToBasket(category, i) {
     const clone = JSON.parse(JSON.stringify(food[category][i]));
     food[category][i]["amount"] = 1;
