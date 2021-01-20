@@ -80,7 +80,6 @@ function generateCardTitle(img, name) {
             </div>`;
 }
 
-
 /**
  *
  * This function generates the a list of meal to choose of each food category
@@ -150,4 +149,73 @@ function addToBasket(category, i) {
     food[category][i]["amount"] = 1;
     loadHTML();
     showBasket(clone);
+}
+
+/**
+ * Search funktion
+ *
+ * @param {} $event
+ */
+
+function filterMeals($event) {
+    $event.preventDefault();
+    let search = document.getElementById("search").value;
+    search = search.toLowerCase();
+
+    document.getElementById("food-insert").innerHTML = "";
+    searchPasta(search);
+    searchPizza(search);
+    searchSalad(search);
+}
+
+function searchPizza(search) {
+    let pizza = food["pizzas"];
+    let div = document.getElementById("food-insert");
+    for (let i = 0; i < pizza.length; i++) {
+        const element = pizza[i];
+        if (element["type"].toLowerCase().includes(search)) {
+            div.innerHTML += generatePriceHTML(
+                element["type"],
+                element["price"].toFixed(2),
+                element["amount"],
+                i,
+                "pizzas"
+            );
+        }
+    }
+}
+
+function searchPasta(search) {
+    let pasta = food["pastas"];
+    let div = document.getElementById("food-insert");
+    for (let i = 0; i < pasta.length; i++) {
+        const element = pasta[i];
+        if (element["type"].toLowerCase().includes(search)) {
+            div.innerHTML += generatePriceHTML(
+                element["type"],
+                element["price"].toFixed(2),
+                element["amount"],
+                i,
+                "pastas"
+            );
+        }
+    }
+}
+
+function searchSalad(search) {
+    let salad = food["salads"];
+    let div = document.getElementById("food-insert");
+    for (let i = 0; i < salad.length; i++) {
+        const element = salad[i];
+
+        if (element["type"].toLowerCase().includes(search)) {
+            div.innerHTML += generatePriceHTML(
+                element["type"],
+                element["price"].toFixed(2),
+                element["amount"],
+                i,
+                "salads"
+            );
+        }
+    }
 }
