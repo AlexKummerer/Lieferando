@@ -68,7 +68,7 @@ let food = {
         },
     ],
     images: [{
-            src: "img/pexels-edward-eyer-1049620.jpg",
+            src: "img/pexels-kenneth-carpina-1653772.jpg",
             name: "Pizza",
         },
         {
@@ -77,7 +77,7 @@ let food = {
         },
         {
             src: "img/pexels-chan-walrus-1059905.jpg",
-            name: "Salat",
+            name: "Salad",
         },
     ],
 };

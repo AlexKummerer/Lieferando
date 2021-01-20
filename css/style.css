@@ -90,6 +90,7 @@ body {
     bottom: 0;
     right: 0;
     transition: all 225ms ease-in-out;
+    overflow: auto;
 }
 
 .basket-button {

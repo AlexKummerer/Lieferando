@@ -12,11 +12,10 @@ function loadHTML() {
 
 function loadPizza() {
     let pizza = food["pizzas"];
+    let image = food["images"][0];
     let div = document.getElementById("food-insert");
-    div.innerHTML += generateCardTitle(
-        "img/pexels-kenneth-carpina-1653772.jpg",
-        "Pizza"
-    );
+    div.innerHTML += generateCardTitle(image["src"], image["name"]);
+
     for (let i = 0; i < pizza.length; i++) {
         const element = pizza[i];
         div.innerHTML += generatePriceHTML(
@@ -31,11 +30,10 @@ function loadPizza() {
 
 function loadPasta() {
     let pasta = food["pastas"];
+    let image = food["images"][1];
     let div = document.getElementById("food-insert");
-    div.innerHTML += generateCardTitle(
-        "img/pexels-engin-akyurt-1460872.jpg",
-        "Pasta"
-    );
+    div.innerHTML += generateCardTitle(image["src"], image["name"]);
+
     for (let i = 0; i < pasta.length; i++) {
         const element = pasta[i];
         div.innerHTML += generatePriceHTML(
@@ -50,11 +48,9 @@ function loadPasta() {
 
 function loadSalad() {
     let salad = food["salads"];
+    let image = food["images"][2];
     let div = document.getElementById("food-insert");
-    div.innerHTML += generateCardTitle(
-        "img/pexels-chan-walrus-1059905.jpg",
-        "Salat"
-    );
+    div.innerHTML += generateCardTitle(image["src"], image["name"]);
     for (let i = 0; i < salad.length; i++) {
         const element = salad[i];
         div.innerHTML += generatePriceHTML(
@@ -76,13 +72,14 @@ function loadSalad() {
  * @param {object} name - name of the food category
  */
 function generateCardTitle(img, name) {
-    return `<div class="menucard-mealsgroup">
+    return `<div class="menucard-mealsgroup" id=${name}>
                 <img class="category-image" src="${img}">                
                 <div class="item-name">
                     <h2>${name}</h2>
                 </div>
             </div>`;
 }
+
 
 /**
  *
