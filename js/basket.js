@@ -108,7 +108,7 @@ function generateCard(amount, type, finalprice, i) {
 function deleteMeal(i) {
     shoppingBasket.splice(i, 1);
     updatedBasket();
-    loadHTML();
+    loadHTML(food);
 }
 
 /**
@@ -130,7 +130,7 @@ function increase(i) {
 function decrease(i) {
     shoppingBasket[i].amount--;
     if (shoppingBasket[i].amount == 0) {
-        deleteItem(i);
+        deleteMeal(i);
     }
     updatedBasket();
 }

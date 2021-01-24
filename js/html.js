@@ -1,6 +1,13 @@
-/**
- * This function generates HTMl Content
- */
+let food = fetch(
+        "http://alexander-kummerer.developerakademie.com/lieferando/js/food.json")
+    .then(response => response.json())
+    .then(response => {
+        console.log(response);
+        food = response;
+    });
+
+
+
 function loadHTML() {
     document.getElementById("food-insert").innerHTML = "";
     loadPizza();
@@ -17,13 +24,15 @@ function loadPizza() {
     div.innerHTML += generateCardTitle(image["src"], image["name"]);
 
     for (let i = 0; i < pizza.length; i++) {
-        const element = pizza[i];
+        const pizzas = pizza[i];
+        let pricing = pizzas["amount"] * pizzas["price"];
         div.innerHTML += generatePriceHTML(
-            element["type"],
-            element["price"].toFixed(2),
-            element["amount"],
+            pizzas["type"],
+            pizzas["price"].toFixed(2),
+            pizzas["amount"],
             i,
-            "pizzas"
+            "pizzas",
+            pricing.toFixed(2)
         );
     }
 }
@@ -35,13 +44,15 @@ function loadPasta() {
     div.innerHTML += generateCardTitle(image["src"], image["name"]);
 
     for (let i = 0; i < pasta.length; i++) {
-        const element = pasta[i];
+        const pastas = pasta[i];
+        let pricing = pastas["amount"] * pastas["price"];
         div.innerHTML += generatePriceHTML(
-            element["type"],
-            element["price"].toFixed(2),
-            element["amount"],
+            pastas["type"],
+            pastas["price"],
+            pastas["amount"],
             i,
-            "pastas"
+            "pastas",
+            pricing
         );
     }
 }
@@ -52,13 +63,16 @@ function loadSalad() {
     let div = document.getElementById("food-insert");
     div.innerHTML += generateCardTitle(image["src"], image["name"]);
     for (let i = 0; i < salad.length; i++) {
-        const element = salad[i];
+        const salads = salad[i];
+        let pricing = salads["amount"] * salads["price"];
         div.innerHTML += generatePriceHTML(
-            element["type"],
-            element["price"].toFixed(2),
-            element["amount"],
+            salads["type"],
+            salads["price"],
+            salads["amount"],
             i,
-            "salads"
+            "salads",
+            pricing,
+
         );
     }
 }
@@ -91,7 +105,7 @@ function generateCardTitle(img, name) {
  * @param {number} i  - number of each meal
  * @param {object} category - category of each food category
  */
-function generatePriceHTML(type, price, amount, i, category) {
+function generatePriceHTML(type, price, amount, i, category, pricing) {
     return `<div class="meal-container meal-container-discription">
                 <div class="meal-container-name" >
                     <span class="meal-name">${type}</span>
@@ -99,9 +113,9 @@ function generatePriceHTML(type, price, amount, i, category) {
                 </div>    
                 <div class="number">  
                     <div class="number-count"> 
-                        <a onclick="reduceAmount('${category}',${i})">-</a> ${amount} <a onclick="increaseAmount('${category}',${i})">+</a>
+                        <a onclick="reduceAmount('${category}',${i})">-</a> ${amount} <a onclick="increaseAmount('${category}', ${i})">+</a>
                     </div>
-                    <button class ="btn btn-primary" onclick="addToBasket('${category}', ${i})">Hinzufügen</button> 
+                    <button class ="btn btn-primary" onclick="addToBasket('${category}',${i})"> ${pricing} €</button> 
                 </div>
             </div>`;
 }
@@ -172,14 +186,15 @@ function searchPizza(search) {
     let pizza = food["pizzas"];
     let div = document.getElementById("food-insert");
     for (let i = 0; i < pizza.length; i++) {
-        const element = pizza[i];
-        if (element["type"].toLowerCase().includes(search)) {
+        const pizzas = pizza[i];
+        if (pizzas["type"].toLowerCase().includes(search)) {
             div.innerHTML += generatePriceHTML(
-                element["type"],
-                element["price"].toFixed(2),
-                element["amount"],
+                pizzas["type"],
+                pizzas["price"].toFixed(2),
+                pizzas["amount"],
                 i,
-                "pizzas"
+                "pizzas",
+                pricing.toFixed(2)
             );
         }
     }
@@ -189,14 +204,15 @@ function searchPasta(search) {
     let pasta = food["pastas"];
     let div = document.getElementById("food-insert");
     for (let i = 0; i < pasta.length; i++) {
-        const element = pasta[i];
-        if (element["type"].toLowerCase().includes(search)) {
+        const pastas = pasta[i];
+        if (pastas["type"].toLowerCase().includes(search)) {
             div.innerHTML += generatePriceHTML(
-                element["type"],
-                element["price"].toFixed(2),
-                element["amount"],
+                pastas["type"],
+                pastas["price"].toFixed(2),
+                pastas["amount"],
                 i,
-                "pastas"
+                "pastas",
+                pricing.toFixed(2)
             );
         }
     }
@@ -206,15 +222,16 @@ function searchSalad(search) {
     let salad = food["salads"];
     let div = document.getElementById("food-insert");
     for (let i = 0; i < salad.length; i++) {
-        const element = salad[i];
+        const salads = salad[i];
 
-        if (element["type"].toLowerCase().includes(search)) {
+        if (salads["type"].toLowerCase().includes(search)) {
             div.innerHTML += generatePriceHTML(
-                element["type"],
-                element["price"].toFixed(2),
-                element["amount"],
+                salads["type"],
+                salads["price"].toFixed(2),
+                salads["amount"],
                 i,
-                "salads"
+                "salads",
+                pricing.toFixed(2)
             );
         }
     }
