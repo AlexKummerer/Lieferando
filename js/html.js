@@ -187,6 +187,7 @@ function searchPizza(search) {
     let div = document.getElementById("food-insert");
     for (let i = 0; i < pizza.length; i++) {
         const pizzas = pizza[i];
+        let pricing = pizzas["amount"] * pizzas["price"];
         if (pizzas["type"].toLowerCase().includes(search)) {
             div.innerHTML += generatePriceHTML(
                 pizzas["type"],
@@ -205,6 +206,7 @@ function searchPasta(search) {
     let div = document.getElementById("food-insert");
     for (let i = 0; i < pasta.length; i++) {
         const pastas = pasta[i];
+        let pricing = pastas["amount"] * pastas["price"];
         if (pastas["type"].toLowerCase().includes(search)) {
             div.innerHTML += generatePriceHTML(
                 pastas["type"],
@@ -223,7 +225,7 @@ function searchSalad(search) {
     let div = document.getElementById("food-insert");
     for (let i = 0; i < salad.length; i++) {
         const salads = salad[i];
-
+        let pricing = salads["amount"] * salads["price"];
         if (salads["type"].toLowerCase().includes(search)) {
             div.innerHTML += generatePriceHTML(
                 salads["type"],
