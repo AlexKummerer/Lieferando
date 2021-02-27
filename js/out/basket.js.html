@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: basket.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: basket.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>let shoppingBasket = [];
+setURL(
+    "http://alexander-kummerer.developerakademie.com/lieferando/json_to_server"
+);
+let subtotal = 0;
+let total = 0;
+let orderStatus = 0;
+let itemsAmount = 0;
+let minimumOrderCosts = 40;
+let minimumdifference;
+let orderedMeals = [];
+
+/**
+ * This funtion will load the saved basket from the local Storage
+ *
+ *
+ */
+function init() {
+    shoppingBasket = JSON.parse(localStorage.getItem("shoppingBasket")) || [];
+    updatedBasket();
+}
+
+/**
+ * This function check, if each meal is in the basket.
+ *
+ * @param {object} clone
+ */
+function showBasket(clone) {
+    let item = {
+        name: clone.type,
+        price: clone.price,
+        amount: clone.amount,
+    };
+    let itemInBasket = shoppingBasket.find((e) => e.name == item.name);
+
+    console.log("item", item);
+    console.log("itemInBasket", itemInBasket);
+
+    if (itemInBasket) {
+        itemInBasket.amount += item.amount; // =   itemInBasket.amount = itemInBasket.amount + item.amount;
+        updatedBasket();
+    } else {
+        shoppingBasket.push(item);
+        updatedBasket();
+    }
+}
+
+/**
+ * This function will update the basket.
+ *
+ */
+function updatedBasket() {
+    document.getElementById("basket-btn").innerHTML = "";
+    document.getElementById("shoppingcard").innerHTML = "";
+    for (let i = 0; i &lt; shoppingBasket.length; i++) {
+        const card = shoppingBasket[i];
+        let finalprice = card["price"] * card["amount"];
+        document.getElementById("shoppingcard").innerHTML += generateCard(
+            card["amount"],
+            card["name"],
+            finalprice,
+            i
+        );
+    }
+    localStorage.setItem("shoppingBasket", JSON.stringify(shoppingBasket));
+    totalPriceCalc();
+    countArrayAmount();
+    loadHTML();
+    showBasketBtn();
+    minimumOrderDif();
+}
+
+/**
+ *
+ * this function will show the meal with amount in the basket
+ *
+ * @param {number} amount - amount of each meal
+ * @param {string} type - type of the meal
+ * @param {number} finalprice - finalprice of each meal
+ * @param {number} i - number of each type
+ */
+function generateCard(amount, type, finalprice, i) {
+    return ` 
+    &lt;div class="card-row">
+        &lt;div class="card-column">
+            &lt;div class="cart-meal-amount" id="amounts${i}"> ${amount}x &lt;/div>
+            &lt;div class="cart-meal-name"> ${type}&lt;/div> 
+        &lt;/div>
+        &lt;div class="card-column card-meal-edit">
+                &lt;div>  &lt;img onclick="decrease(${i})" class="icon3" src="img/minus_50px.png">&lt;/div>
+                &lt;div>  &lt;img onclick="increase(${i})" class="icon3" src="img/plus_50px.png"> &lt;/div>
+            &lt;/div>
+
+            &lt;div class="card-column">
+                &lt;div class="item-price">${finalprice.toFixed(2)} € &lt;/div>
+                &lt;img class="cart-meal-delete" onclick="deleteMeal(${i})" class="icon3" src="img/trash_64px.png">
+            &lt;/div>
+        &lt;/div>
+    &lt;/div>`;
+}
+
+/**
+ *
+ * You can delete the meal
+ *
+ * @param {number} i - number of each type
+ */
+function deleteMeal(i) {
+    shoppingBasket.splice(i, 1);
+    updatedBasket();
+    loadHTML(food);
+}
+
+/**
+ * You can increase the amount
+ *
+ * @param {number} i - number of each type
+ */
+function increase(i) {
+    shoppingBasket[i].amount++;
+    updatedBasket();
+}
+
+/**
+ *
+ * You can decrease the amount
+ *
+ *  @param {number} i - number of each type
+ */
+function decrease(i) {
+    shoppingBasket[i].amount--;
+    if (shoppingBasket[i].amount == 0) {
+        deleteMeal(i);
+    }
+    updatedBasket();
+}
+
+/**
+ * This function calculates the finalprce and the subtotal
+ *
+ */
+function totalPriceCalc() {
+    subtotal = 0;
+    let total = 0;
+    for (let i = 0; i &lt; shoppingBasket.length; i++) {
+        const card = shoppingBasket[i];
+        subtotal += card["price"] * card["amount"];
+        total = subtotal + 4.55;
+    }
+    document.getElementById("sumwithoutshipping").innerHTML = `${subtotal.toFixed(
+    2
+  )} € `;
+    document.getElementById("sumwithshipping").innerHTML = `${total.toFixed(
+    2
+  )} €`;
+}
+
+/**
+ *
+ * This funciton will check if the subtotal is higher than the minimumOrderCosts
+ *
+ *
+ */
+function checksum() {
+    if (subtotal > minimumOrderCosts) {
+        orderStatus = 0;
+        document.getElementById(
+            "sumcheck"
+        ).innerHTML = `&lt;br> &lt;div> Du hast den Mindestbestelllwert erreicht. Du kannst nun bestellen.&lt;/div> `;
+    } else {
+        orderStatus = 1;
+        document.getElementById(
+            "sumcheck"
+        ).innerHTML = `&lt;br> &lt;div> Leider kannst du noch nicht bestellen. Wir liefern erst ab einen Mindestbestellwert von &lt;span>${minimumOrderCosts.toFixed(
+      2
+    )} € &lt;/span> (exkl. Lieferkosten). `;
+    }
+}
+
+/**
+ * This function declares the the basket placeholder if shoppingBasket array =0
+ *
+ *
+ */
+function showBasketPlaceholder() {
+    if (shoppingBasket.length == 0) {
+        document.getElementById(
+            "shoppingcard"
+        ).innerHTML = `  &lt;img src="https://img.icons8.com/carbon-copy/100/000000/shopping-cart.png">
+        &lt;p> Wähle leckere Gerichte aus und bestelle Dein Menü. &lt;/p>`;
+    }
+}
+
+/**
+ * This function will display the difference of minimumOrderCosts and the subtotal.
+ *
+ *
+ */
+function minimumOrderDif() {
+    document.getElementById("minimumcost").innerHTML = "";
+    minimumdifference = minimumOrderCosts - subtotal;
+    if (shoppingBasket.length >= 1) {
+        document
+            .getElementById("minimumcost")
+            .classList.add("sum-row", "minimumcost");
+        document.getElementById("minimumcost").innerHTML = `
+        &lt;p> Benötigter Betrag, um den Mindestbestellwert zu erreichen &lt;/p>
+        &lt;span>${minimumdifference.toFixed(2)} € &lt;/span>
+        `;
+    }
+    if (minimumdifference &lt;= 0) {
+        document
+            .getElementById("minimumcost")
+            .classList.remove("sum-row", "minimumcost");
+        document.getElementById("minimumcost").innerHTML = "";
+    }
+}
+
+/**
+ *
+ * This function will show the Basket Button on responsive displays
+ *
+ *
+ */
+function showBasketBtn() {
+    if (shoppingBasket.length >= 1) {
+        document.getElementById("basket-btn").classList.remove("d-none");
+        document.getElementById("basket-btn").innerHTML += generateBtn();
+    }
+}
+
+/**
+ * This function generates the Button
+ *
+ */
+function generateBtn() {
+    return `
+    &lt;div class="basket-bottom-bar">
+        &lt;button class="basket-bottom-button btn-primary btn-lg" onclick="showBasketMobile()">
+          &lt;div class="basket-button-icon-container">
+            &lt;img class="basket-button-icon"src="img/shopping_cart_26px.png"/>
+            &lt;span class="basket-button-counter">${itemsAmount}&lt;/span>
+          &lt;/div>
+          &lt;p class="basket-button-label">
+            &lt;span class=""> Warenkorb&lt;/span>
+            &lt;span class="basket-button-label-price"> (${subtotal.toFixed(
+              2
+            )} €) &lt;/span>
+          &lt;/p>
+        &lt;/button>
+    &lt;/div>
+
+`;
+}
+
+/**
+ *
+ * This function will count the amount of each type of meal
+ *
+ */
+function countArrayAmount() {
+    itemsAmount = shoppingBasket.length;
+}
+
+function showBasketMobile() {
+    document.getElementById("ibasket").classList.remove("hide-mobile");
+}
+
+function closeBasket() {
+    document.getElementById("ibasket").classList.add("hide-mobile");
+}
+
+/**
+ * This function will give you a alert if order is succes or subtotal is not reached
+ *
+ */
+function startorder() {
+    if (orderStatus == 0) {
+        const clone = JSON.parse(JSON.stringify(shoppingBasket));
+        orderedMeal(clone);
+        alert("....doch nicht. :-)");
+        shoppingBasket = [];
+        localStorage.setItem("shoppingBasket", JSON.stringify(shoppingBasket));
+        document.getElementById("shoppingcard").innerHTML = "";
+        document.getElementById("basket-btn").innerHTML = "";
+        resolve();
+    } else {
+        alert("Mindestbestellwert von 40,00 € noch nicht erreicht");
+    }
+}
+
+function resolve() {
+    totalPriceCalc();
+    checksum();
+    showBasketPlaceholder();
+    closeBasket();
+    minimumOrderDif();
+}
+
+/**
+ *
+ *This function will generate a new Array after the order was succesfull and save the order on the server
+ *
+ * @param {object} clone - clove of the shoppingBasket Array
+ */
+function orderedMeal(clone) {
+    meal = [{
+        id: new Date().getTime(),
+        meals: clone
+    }];
+
+    orderedMeals.push(meal);
+    backend.setItem("orderedMeals", JSON.stringify(orderedMeals));
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addToBasket">addToBasket</a></li><li><a href="global.html#checksum">checksum</a></li><li><a href="global.html#countArrayAmount">countArrayAmount</a></li><li><a href="global.html#decrease">decrease</a></li><li><a href="global.html#deleteMeal">deleteMeal</a></li><li><a href="global.html#generateBtn">generateBtn</a></li><li><a href="global.html#generateCard">generateCard</a></li><li><a href="global.html#generateCardTitle">generateCardTitle</a></li><li><a href="global.html#generatePriceHTML">generatePriceHTML</a></li><li><a href="global.html#increase">increase</a></li><li><a href="global.html#increaseAmount">increaseAmount</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#loadJSONFromServer">loadJSONFromServer</a></li><li><a href="global.html#minimumOrderDif">minimumOrderDif</a></li><li><a href="global.html#orderedMeal">orderedMeal</a></li><li><a href="global.html#reduceAmount">reduceAmount</a></li><li><a href="global.html#saveJSONToServer">saveJSONToServer</a></li><li><a href="global.html#showBasket">showBasket</a></li><li><a href="global.html#showBasketBtn">showBasketBtn</a></li><li><a href="global.html#showBasketPlaceholder">showBasketPlaceholder</a></li><li><a href="global.html#startorder">startorder</a></li><li><a href="global.html#totalPriceCalc">totalPriceCalc</a></li><li><a href="global.html#updatedBasket">updatedBasket</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Feb 27 2021 16:14:57 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

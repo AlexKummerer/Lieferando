@@ -1,20 +1,10 @@
-let food = fetch(
-        "http://alexander-kummerer.developerakademie.com/lieferando/js/food.json")
-    .then(response => response.json())
-    .then(response => {
-        console.log(response);
-        food = response;
-    });
-
-
-
 function loadHTML() {
     document.getElementById("food-insert").innerHTML = "";
     loadPizza();
     loadPasta();
     loadSalad();
-    checksum();
-    showBasketPlaceholder();
+    //checksum();
+    //showBasketPlaceholder();
 }
 
 function loadPizza() {
@@ -48,11 +38,11 @@ function loadPasta() {
         let pricing = pastas["amount"] * pastas["price"];
         div.innerHTML += generatePriceHTML(
             pastas["type"],
-            pastas["price"],
+            pastas["price"].toFixed(2),
             pastas["amount"],
             i,
             "pastas",
-            pricing
+            pricing.toFixed(2)
         );
     }
 }
@@ -67,11 +57,11 @@ function loadSalad() {
         let pricing = salads["amount"] * salads["price"];
         div.innerHTML += generatePriceHTML(
             salads["type"],
-            salads["price"],
+            salads["price"].toFixed(2),
             salads["amount"],
             i,
             "salads",
-            pricing,
+            pricing.toFixed(2),
 
         );
     }
@@ -165,11 +155,15 @@ function addToBasket(category, i) {
     showBasket(clone);
 }
 
+
+
 /**
  * Search funktion
  *
  * @param {} $event
  */
+
+/*
 
 function filterMeals($event) {
     $event.preventDefault();
@@ -238,3 +232,4 @@ function searchSalad(search) {
         }
     }
 }
+*/

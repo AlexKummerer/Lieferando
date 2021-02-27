@@ -304,10 +304,10 @@ function resolve() {
  * @param {object} clone - clove of the shoppingBasket Array
  */
 function orderedMeal(clone) {
-    meal = {
+    meal = [{
         id: new Date().getTime(),
-        meals: clone,
-    };
+        meals: clone
+    }];
 
     orderedMeals.push(meal);
     backend.setItem("orderedMeals", JSON.stringify(orderedMeals));

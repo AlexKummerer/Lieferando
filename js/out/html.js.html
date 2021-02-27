@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: html.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: html.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>function loadHTML() {
+    document.getElementById("food-insert").innerHTML = "";
+    loadPizza();
+    loadPasta();
+    loadSalad();
+    //checksum();
+    //showBasketPlaceholder();
+}
+
+function loadPizza() {
+    let pizza = food["pizzas"];
+    let image = food["images"][0];
+    let div = document.getElementById("food-insert");
+    div.innerHTML += generateCardTitle(image["src"], image["name"]);
+
+    for (let i = 0; i &lt; pizza.length; i++) {
+        const pizzas = pizza[i];
+        let pricing = pizzas["amount"] * pizzas["price"];
+        div.innerHTML += generatePriceHTML(
+            pizzas["type"],
+            pizzas["price"].toFixed(2),
+            pizzas["amount"],
+            i,
+            "pizzas",
+            pricing.toFixed(2)
+        );
+    }
+}
+
+function loadPasta() {
+    let pasta = food["pastas"];
+    let image = food["images"][1];
+    let div = document.getElementById("food-insert");
+    div.innerHTML += generateCardTitle(image["src"], image["name"]);
+
+    for (let i = 0; i &lt; pasta.length; i++) {
+        const pastas = pasta[i];
+        let pricing = pastas["amount"] * pastas["price"];
+        div.innerHTML += generatePriceHTML(
+            pastas["type"],
+            pastas["price"].toFixed(2),
+            pastas["amount"],
+            i,
+            "pastas",
+            pricing.toFixed(2)
+        );
+    }
+}
+
+function loadSalad() {
+    let salad = food["salads"];
+    let image = food["images"][2];
+    let div = document.getElementById("food-insert");
+    div.innerHTML += generateCardTitle(image["src"], image["name"]);
+    for (let i = 0; i &lt; salad.length; i++) {
+        const salads = salad[i];
+        let pricing = salads["amount"] * salads["price"];
+        div.innerHTML += generatePriceHTML(
+            salads["type"],
+            salads["price"].toFixed(2),
+            salads["amount"],
+            i,
+            "salads",
+            pricing.toFixed(2),
+
+        );
+    }
+}
+
+/**
+ *
+ * This function generates the beginning of each food category
+ *
+ *
+ * @param {object} img - image of the food category
+ * @param {object} name - name of the food category
+ */
+function generateCardTitle(img, name) {
+    return `&lt;div class="menucard-mealsgroup" id=${name}>
+                &lt;img class="category-image" src="${img}">                
+                &lt;div class="item-name">
+                    &lt;h2>${name}&lt;/h2>
+                &lt;/div>
+            &lt;/div>`;
+}
+
+/**
+ *
+ * This function generates the a list of meal to choose of each food category
+ *
+ *
+ * @param {string} type - name of each meal
+ * @param {number} price  - price of each mail
+ * @param {number} amount - amount of each meal
+ * @param {number} i  - number of each meal
+ * @param {object} category - category of each food category
+ */
+function generatePriceHTML(type, price, amount, i, category, pricing) {
+    return `&lt;div class="meal-container meal-container-discription">
+                &lt;div class="meal-container-name" >
+                    &lt;span class="meal-name">${type}&lt;/span>
+                    &lt;div class="meal-price">${price} €&lt;/div>
+                &lt;/div>    
+                &lt;div class="number">  
+                    &lt;div class="number-count"> 
+                        &lt;a onclick="reduceAmount('${category}',${i})">-&lt;/a> ${amount} &lt;a onclick="increaseAmount('${category}', ${i})">+&lt;/a>
+                    &lt;/div>
+                    &lt;button class ="btn btn-primary" onclick="addToBasket('${category}',${i})"> ${pricing} €&lt;/button> 
+                &lt;/div>
+            &lt;/div>`;
+}
+
+/**
+ *
+ * This function will increase the amount
+ *
+ *
+ * @param {object} category - category of the meal
+ * @param {number} i - number of the each meal
+ */
+function increaseAmount(category, i) {
+    if (food[category][i]["amount"] &lt;= 1) {
+        food[category][i]["amount"]++;
+    } else {
+        food[category][i]["amount"]++;
+    }
+
+    loadHTML();
+}
+
+/**
+ * This function will reduce the amount
+ * @param {object} category - category of the meal
+ * @param {number} i - number of the each meal
+ */
+function reduceAmount(category, i) {
+    food[category][i]["amount"]--;
+    if (food[category][i]["amount"] &lt;= 1) {
+        food[category][i]["amount"] = 1;
+    }
+
+    loadHTML();
+}
+
+/**
+ * This function will add the meal to the basket
+ *
+ * @param {object} category - category of the meal
+ *  @param {number} i - number of the each meal
+ */
+function addToBasket(category, i) {
+    const clone = JSON.parse(JSON.stringify(food[category][i]));
+    food[category][i]["amount"] = 1;
+    loadHTML();
+    showBasket(clone);
+}
+
+
+
+/**
+ * Search funktion
+ *
+ * @param {} $event
+ */
+
+/*
+
+function filterMeals($event) {
+    $event.preventDefault();
+    let search = document.getElementById("search").value;
+    search = search.toLowerCase();
+
+    document.getElementById("food-insert").innerHTML = "";
+    searchPasta(search);
+    searchPizza(search);
+    searchSalad(search);
+}
+
+function searchPizza(search) {
+    let pizza = food["pizzas"];
+    let div = document.getElementById("food-insert");
+    for (let i = 0; i &lt; pizza.length; i++) {
+        const pizzas = pizza[i];
+        let pricing = pizzas["amount"] * pizzas["price"];
+        if (pizzas["type"].toLowerCase().includes(search)) {
+            div.innerHTML += generatePriceHTML(
+                pizzas["type"],
+                pizzas["price"].toFixed(2),
+                pizzas["amount"],
+                i,
+                "pizzas",
+                pricing.toFixed(2)
+            );
+        }
+    }
+}
+
+function searchPasta(search) {
+    let pasta = food["pastas"];
+    let div = document.getElementById("food-insert");
+    for (let i = 0; i &lt; pasta.length; i++) {
+        const pastas = pasta[i];
+        let pricing = pastas["amount"] * pastas["price"];
+        if (pastas["type"].toLowerCase().includes(search)) {
+            div.innerHTML += generatePriceHTML(
+                pastas["type"],
+                pastas["price"].toFixed(2),
+                pastas["amount"],
+                i,
+                "pastas",
+                pricing.toFixed(2)
+            );
+        }
+    }
+}
+
+function searchSalad(search) {
+    let salad = food["salads"];
+    let div = document.getElementById("food-insert");
+    for (let i = 0; i &lt; salad.length; i++) {
+        const salads = salad[i];
+        let pricing = salads["amount"] * salads["price"];
+        if (salads["type"].toLowerCase().includes(search)) {
+            div.innerHTML += generatePriceHTML(
+                salads["type"],
+                salads["price"].toFixed(2),
+                salads["amount"],
+                i,
+                "salads",
+                pricing.toFixed(2)
+            );
+        }
+    }
+}
+*/</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addToBasket">addToBasket</a></li><li><a href="global.html#checksum">checksum</a></li><li><a href="global.html#countArrayAmount">countArrayAmount</a></li><li><a href="global.html#decrease">decrease</a></li><li><a href="global.html#deleteMeal">deleteMeal</a></li><li><a href="global.html#generateBtn">generateBtn</a></li><li><a href="global.html#generateCard">generateCard</a></li><li><a href="global.html#generateCardTitle">generateCardTitle</a></li><li><a href="global.html#generatePriceHTML">generatePriceHTML</a></li><li><a href="global.html#increase">increase</a></li><li><a href="global.html#increaseAmount">increaseAmount</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#loadJSONFromServer">loadJSONFromServer</a></li><li><a href="global.html#minimumOrderDif">minimumOrderDif</a></li><li><a href="global.html#orderedMeal">orderedMeal</a></li><li><a href="global.html#reduceAmount">reduceAmount</a></li><li><a href="global.html#saveJSONToServer">saveJSONToServer</a></li><li><a href="global.html#showBasket">showBasket</a></li><li><a href="global.html#showBasketBtn">showBasketBtn</a></li><li><a href="global.html#showBasketPlaceholder">showBasketPlaceholder</a></li><li><a href="global.html#startorder">startorder</a></li><li><a href="global.html#totalPriceCalc">totalPriceCalc</a></li><li><a href="global.html#updatedBasket">updatedBasket</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Feb 27 2021 16:14:57 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
