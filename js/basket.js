@@ -6,7 +6,7 @@ let subtotal = 0;
 let total = 0;
 let orderStatus = 0;
 let itemsAmount = 0;
-let minimumOrderCosts = 40;
+let minimumOrderCosts = 20;
 let minimumdifference;
 let orderedMeals = [];
 
@@ -285,7 +285,7 @@ function startorder() {
         document.getElementById("basket-btn").innerHTML = "";
         resolve();
     } else {
-        alert("Mindestbestellwert von 40,00 € noch nicht erreicht");
+        alert("Mindestbestellwert von 20,00 € noch nicht erreicht");
     }
 }
 
@@ -295,6 +295,7 @@ function resolve() {
     showBasketPlaceholder();
     closeBasket();
     minimumOrderDif();
+    orderStatus = 0;
 }
 
 /**
@@ -304,11 +305,11 @@ function resolve() {
  * @param {object} clone - clove of the shoppingBasket Array
  */
 function orderedMeal(clone) {
-    meal = [{
+    meal = {
         id: new Date().getTime(),
         meals: clone
-    }];
+    };
 
     orderedMeals.push(meal);
-    backend.setItem("orderedMeals", JSON.stringify(orderedMeals));
+    backend.setItem("orderedMeals_" + new Date().getTime(), JSON.stringify(orderedMeals));
 }
