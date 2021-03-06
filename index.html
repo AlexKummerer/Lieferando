@@ -9,6 +9,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/footer.scss">
     <link rel="icon" href="img/tableware_48px.png" />
     <title>Alex bringt's....,</title>
     <script src="js/mini_backend.js"></script>
@@ -54,7 +55,9 @@
             <p class="basket-button-label">
                 <span class="basket-button-label-title"> Warenkorb </span>
             </p>
-            <img class="basket-button-close show-mobile" src="img/multiply_16px.png" onclick="closeBasket()" />
+            <svg xmlns="http://www.w3.org/2000/svg" onclick="closeBasket()" class="basket-button-close show-mobile" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+              </svg>
         </div>
 
         <div class="basket basket-button-scroller">
@@ -103,6 +106,50 @@
     </main>
 
     <nav class="basket-bottom-nav show-mobile d-none" id="basket-btn"></nav>
+
+    <footer>
+        <div class="page-wrap">
+            <p class="copy"> &copy; <a href="https://alexkummerer.de/"> 2021 Alexander Kummerer </a> </p>
+
+            <div class="followUp">
+                <a href="https://www.linkedin.com/in/alexander-kummerer-52a1351a8/" target="_blank"> <img src="img/linkedin_48px.png"> </a>
+                <a href="https://github.com/AlexKummerer" target="_blank"> <img src="img/github_48px.png"> </a>
+
+            </div>
+            <div class="imprint">
+                <a href="https://alexkummerer.de/data-protection">Data Protection</a>
+                <a href="https://alexkummerer.de/imprint">Imprint</a>
+            </div>
+            <p class="footer-about"> The icons used are, among other things, from
+                <a href="https://icons8.de" target="_blank">https://icons8.de </a>and are licensed with the license Creative Commons Attribution-NoDervis 3.0 Unported. </p>
+
+        </div>
+
+    </footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
+
+
+
+
+
+
+
+
+
+
 
 </html>

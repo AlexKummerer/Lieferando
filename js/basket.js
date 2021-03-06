@@ -82,7 +82,7 @@ function updatedBasket() {
 function generateCard(amount, type, finalprice, i) {
     return ` 
     <div class="card-row">
-        <div class="card-column">
+        <div class="card-column amount">
             <div class="cart-meal-amount" id="amounts${i}"> ${amount}x </div>
             <div class="cart-meal-name"> ${type}</div> 
         </div>
