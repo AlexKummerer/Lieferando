@@ -18,6 +18,7 @@ let orderedMeals = [];
 function init() {
     shoppingBasket = JSON.parse(localStorage.getItem("shoppingBasket")) || [];
     updatedBasket();
+
 }
 
 /**
@@ -68,6 +69,7 @@ function updatedBasket() {
     loadHTML();
     showBasketBtn();
     minimumOrderDif();
+    checksum();
 }
 
 /**
@@ -162,18 +164,21 @@ function totalPriceCalc() {
  *
  */
 function checksum() {
-    if (subtotal > minimumOrderCosts) {
-        orderStatus = 0;
-        document.getElementById(
-            "sumcheck"
-        ).innerHTML = `<br> <div> Du hast den Mindestbestelllwert erreicht. Du kannst nun bestellen.</div> `;
-    } else {
+    if (subtotal < minimumOrderCosts) {
         orderStatus = 1;
         document.getElementById(
             "sumcheck"
         ).innerHTML = `<br> <div> Leider kannst du noch nicht bestellen. Wir liefern erst ab einen Mindestbestellwert von <span>${minimumOrderCosts.toFixed(
       2
     )} € </span> (exkl. Lieferkosten). `;
+
+    } else {
+        orderStatus = 0;
+        document.getElementById(
+            "sumcheck"
+        ).innerHTML = `<br> <div> Du hast den Mindestbestelllwert erreicht. Du kannst nun bestellen.</div> `;
+
+
     }
 }
 
