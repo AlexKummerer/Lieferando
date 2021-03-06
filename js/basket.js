@@ -15,10 +15,10 @@ let orderedMeals = [];
  *
  *
  */
-function init() {
+async function init() {
+    await downloadFromServer();
     shoppingBasket = JSON.parse(localStorage.getItem("shoppingBasket")) || [];
     updatedBasket();
-
 }
 
 /**
