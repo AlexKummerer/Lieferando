@@ -1,0 +1,30 @@
+footer {
+    padding: 7.5em 0;
+    background: #252525;
+    width: 70%;
+    text-align: center;
+}
+
+.footer-about {
+    line-height: 1.4em;
+    padding: 0 20%;
+    margin-top: 2em;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.875em;
+}
+
+.imprint {
+    margin-top: 1em;
+    text-align: center;
+}
+
+.imprint a {
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+@media (max-width: 1024px) {
+    footer {
+        width: 100% !important;
+    }
+}
